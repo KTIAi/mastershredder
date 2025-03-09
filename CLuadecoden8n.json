@@ -48,7 +48,7 @@
     },
     {
       "parameters": {
-        "sendTo": "=kawaiitoyonly@gmail.com",
+        "sendTo": "=",
         "subject": "Newsletter",
         "emailType": "text",
         "message": "Output",
@@ -60,12 +60,12 @@
         360,
         0
       ],
-      "id": "6659ac24-eb7f-4a59-98ad-275284143765",
+      "id": "",
       "name": "Gmail",
-      "webhookId": "70ef3e4e-3e77-4e90-9047-c5b1f1fc71d5",
+      "webhookId": "",
       "credentials": {
         "gmailOAuth2": {
-          "id": "ECtQrnPrd13matVe",
+          "id": "",
           "name": "Gmail account 10"
         }
       }
