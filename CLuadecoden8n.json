@@ -1,0 +1,814 @@
+{
+  "name": "April O'Neil Trend Report",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a high-energy trend analyst. Review the latest trends from {{$json[\"name\"]}} ({{$json[\"url\"]}}).\nExtract the most impactful insights in this format:\n\n🔥 HEADLINE: (Eye-catching title)  \n🔍 WHAT'S HAPPENING: (Quick, engaging summary)  \n🚀 WHY IT MATTERS: (Strategic insight—why should they care?)  \n📈 WHO'S WINNING: (Influencers or brands leading the trend)  \n🎯 TAKEAWAY: (Actionable insight)\n\nAlso, include relevant images pulled from the site or a stock source for every 100 characters.",
+        "options": {
+          "systemMessage": "You are the infamous April O'Neil a tenacious journalist who is always willing to go the extra mile to uncover the truth."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        160,
+        -360
+      ],
+      "id": "9a2d92ff-f912-4c9d-8fcd-ae886bc6324a",
+      "name": "AI Agent",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "notes": "CASUAL AUTOMATION CONSULTANT STYLE\nVOICE:\n\nWrite like messaging a peer on LinkedIn\nUse conversational tone + light emojis (1-2 per section)\nShow genuine enthusiasm but stay professional\nAcknowledge sales context with light humor\n\nSTRUCTURE:\n\nOpener\n\n\n\"Hey! I was scrolling through [platform]...\"\nSpecific compliment about their work\nAcknowledge pitch with humor\n\n\nValue Pitch\n\n\nShare relevant pain point observation\nBrief mention of similar work\n1-2 believable metrics for their industry\nFocus on human impact over technical details\n\n\nClose\n\n\nClear but relaxed next steps\nValidate if not interested\nFriendly sign-off\n\nKEY RULES:\n\nKeep response to under 6 sentences\nUse contractions and natural speech\nAvoid jargon and pressure tactics\nResearch their presence for specific references\nMatch industry vocabulary while staying casual"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -20,
+        20
+      ],
+      "id": "befee30b-0dfb-4f16-b0bf-876870dc3b8f",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "uaJOtplCks59vwgb",
+          "name": "OpenAi account 4"
+        }
+      },
+      "notes": "Investigative spirit:\nShe has a strong journalistic drive to find the story behind the news, often going against her boss's wishes to pursue leads related to the Turtles.\nEmpathetic nature:\nWhile tough, April cares deeply about the people around her and is motivated to help those in need.\nResilience:\nShe doesn't back down easily in the face of danger or challenges, standing her ground against villains and authorities.\nIntelligence:\nApril is quick-witted and resourceful, often using her intellect to solve problems and understand complex situations.\nLoyalty:\nOnce she trusts someone, she is fiercely loyal and will go to great lengths to protect them, especially the Ninja Turtles"
+    },
+    {
+      "parameters": {
+        "sendTo": "=kawaiitoyonly@gmail.com",
+        "subject": "Newsletter",
+        "emailType": "text",
+        "message": "Output",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        360,
+        0
+      ],
+      "id": "6659ac24-eb7f-4a59-98ad-275284143765",
+      "name": "Gmail",
+      "webhookId": "70ef3e4e-3e77-4e90-9047-c5b1f1fc71d5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ECtQrnPrd13matVe",
+          "name": "Gmail account 10"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      trend_finders: [\n        { \"name\": \"Influencer Marketing Hub\", \"url\": \"https://influencermarketinghub.com\" },\n        { \"name\": \"HypeAuditor\", \"url\": \"https://hypeauditor.com\" },\n        { \"name\": \"Social Blade\", \"url\": \"https://socialblade.com\" },\n        { \"name\": \"Brandwatch\", \"url\": \"https://www.brandwatch.com\" },\n        { \"name\": \"Talkwalker\", \"url\": \"https://www.talkwalker.com\" },\n        { \"name\": \"TrendHunter\", \"url\": \"https://www.trendhunter.com\" },\n        { \"name\": \"Awario\", \"url\": \"https://awario.com\" },\n        { \"name\": \"Pulsar Platform\", \"url\": \"https://www.pulsarplatform.com\" },\n        { \"name\": \"Supercreator\", \"url\": \"https://www.supercreator.app\" },\n        { \"name\": \"Google Analytics\", \"url\": \"https://analytics.google.com\" },\n        { \"name\": \"Meltwater\", \"url\": \"https://www.meltwater.com\" },\n        { \"name\": \"BuzzSumo\", \"url\": \"https://www.buzzsumo.com\" },\n        { \"name\": \"Reddit\", \"url\": \"https://www.reddit.com\" },\n        { \"name\": \"Reddit NSFW\", \"url\": \"https://www.reddit.com/r/SocialMediaMarketing/comments/1dfuq41/tips_for_managing_social_media_as_an_nsfw_creator/\" }\n      ]\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        -200
+      ],
+      "id": "4a94466a-17a0-47cb-8ba6-58ca24d1d3af",
+      "name": "Trend Finders"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {},
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1160,
+        -180
+      ],
+      "id": "5ddcce37-bb23-495a-84ef-10f3139036d5",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://bait.onrender.com/scraper",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        -360
+      ],
+      "id": "1b1c9a8a-bc95-42d4-985b-60c750903271",
+      "name": "HTTP Request",
+      "alwaysOutputData": true,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "Daily Trend Report",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        500,
+        -360
+      ],
+      "id": "e8bd610b-56db-4d59-8d73-5f6b1afb6844",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "chatId": "={{chat.id }}",
+        "text": "={{ output}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        720,
+        -360
+      ],
+      "id": "592c39c0-a1a4-4033-9152-0d70bf841b3f",
+      "name": "Telegram",
+      "credentials": {
+        "telegramApi": {
+          "id": "DBSiLP0SOdmoAlbd",
+          "name": "Telegram account 74"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://socialblade.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -380,
+        -60
+      ],
+      "id": "10bcad8d-fdb4-4271-8a6b-a3852daf6803",
+      "name": "Social Blade HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://hypeauditor.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -380,
+        -220
+      ],
+      "id": "977f2d42-96c3-48af-9fa7-e64453e0f0c5",
+      "name": "HypeAuditor HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://influencermarketinghub.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -380,
+        -400
+      ],
+      "id": "4f6f1a33-863c-4328-81f1-2f3f83f5a556",
+      "name": "Influencer Hub HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.brandwatch.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -520,
+        -140
+      ],
+      "id": "c2c517ed-18ec-42eb-a920-3795cba6d8ea",
+      "name": "Brandwatch HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.talkwalker.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -520,
+        -300
+      ],
+      "id": "293d0dce-d353-4e5c-ae61-cc4914883572",
+      "name": "Talkwalker HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.trendhunter.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -660,
+        -380
+      ],
+      "id": "3b441e10-199b-4ab8-975a-723c8658ec21",
+      "name": "TrendHunter HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://awario.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -700,
+        -60
+      ],
+      "id": "aee56552-fae9-445b-a9c3-4dbfea54572f",
+      "name": "Awario HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.pulsarplatform.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -660,
+        -220
+      ],
+      "id": "6cb32a6c-0707-455f-a372-79128ef7fbc4",
+      "name": "Pulsar Platform HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.supercreator.app",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -660,
+        100
+      ],
+      "id": "eb0f7321-738d-46b3-bfc2-0bb47f22edca",
+      "name": "Supercreator HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://analytics.google.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -520,
+        0
+      ],
+      "id": "fde696fb-c703-43db-a506-3936845b1a34",
+      "name": "Google Analytics HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.meltwater.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -400,
+        -540
+      ],
+      "id": "9e850518-3c63-43e7-b2db-8383346e1b2f",
+      "name": "Meltwater HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.buzzsumo.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -640,
+        280
+      ],
+      "id": "f75a3820-601a-41be-8593-09bf7153ef09",
+      "name": "BuzzSumo HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.reddit.com",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -520,
+        -440
+      ],
+      "id": "8d95c8c6-3f1b-44d8-9589-710dba909801",
+      "name": "Reddit HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://www.reddit.com/r/SocialMediaMarketing/comments/1dfuq41/tips_for_managing_social_media_as_an_nsfw_creator/",
+        "options": {
+          "response": {
+            "responseFormat": "autodetect"
+          },
+          "timeout": 30000,
+          "retry": {
+            "maxTries": 3,
+            "waitBetweenTries": 5000
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -660,
+        -520
+      ],
+      "id": "971d126d-3527-472f-a5c0-d17ae9a45aef",
+      "name": "Reddit NSFW HTTP",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "continueOnFail": true,
+      "notes": "Replaced axios code node with native HTTP Request"
+    },
+    {
+      "parameters": {
+        "resource": "spreadsheet",
+        "title": "Trend Scraper Issues",
+        "sheetsUi": {
+          "sheetValues": [
+            {
+              "title": "Usernames"
+            },
+            {},
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        460,
+        80
+      ],
+      "id": "a191bda5-caec-4cfd-8177-685395088163",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kIovIlUdolrAqg6P",
+          "name": "Google Sheets account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "resource": "database",
+        "databaseId": {
+          "__rl": true,
+          "value": "https://www.notion.so/1a7034027179800f8715ebf5c79bc1a4?v=1a703402717980ec8017000c4410f6bd&pvs=4",
+          "mode": "url"
+        }
+      },
+      "type": "n8n-nodes-base.notionTool",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        -60
+      ],
+      "id": "35ec528f-bf73-4c01-ac45-0b543f349cd9",
+      "name": "Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "PdMlupjuIL9EZnT5",
+          "name": "Notion account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process the HTTP response data and format it for the AI Agent\n// This node helps transform raw HTTP responses into a consistent format\n\nconst formatResponse = (item) => {\n  // If there's a binary response, we need to handle it differently\n  if (item.binary) {\n    return {\n      json: {\n        name: item.json.url || 'Unknown Source',\n        url: item.json.url || '',\n        content: 'Content retrieved as binary data',\n        source: item.json.url || ''\n      }\n    };\n  }\n\n  // For regular JSON responses\n  return {\n    json: {\n      name: item.json.url || 'Unknown Source',\n      url: item.json.url || '',\n      content: typeof item.json.data === 'string' ? item.json.data : JSON.stringify(item.json),\n      source: item.json.url || ''\n    }\n  };\n};\n\n// Return the formatted data\nreturn formatResponse($input.item);\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        -360
+      ],
+      "id": "data-formatter",
+      "name": "Format Data",
+      "alwaysOutputData": true,
+      "continueOnFail": true,
+      "notes": "This node formats the HTTP responses into a consistent structure for the AI agent"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "name",
+              "value": "={{ $json.url ? (new URL($json.url)).hostname.replace('www.', '') : 'Unknown Source' }}"
+            },
+            {
+              "name": "url",
+              "value": "={{ $json.url || '' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        -180,
+        -200
+      ],
+      "id": "transform-node",
+      "name": "Transform Response",
+      "notes": "Transforms HTTP response data into the format expected by the AI Agent"
+    },
+    {
+      "parameters": {
+        "operation": "formatErrorMessage",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.errorWorkflow",
+      "typeVersion": 1,
+      "position": [
+        340,
+        200
+      ],
+      "id": "error-handler",
+      "name": "Error Handler",
+      "notes": "Handles errors that occur in the workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trend Finders": {
+      "main": [
+        [
+          {
+            "node": "Influencer Hub HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HypeAuditor HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Social Blade HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Brandwatch HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Talkwalker HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Reddit HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "TrendHunter HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Meltwater HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Pulsar Platform HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Awario HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Analytics HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Supercreator HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "BuzzSumo HTTP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Reddit NSFW HTTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Trend Finders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Influencer Hub HTTP": {
+      "main": [
+        [
+          {
+            "node": "Format Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meltwater HTTP": {
+      "main": [
+        [
+          {
+            "node": "Format Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reddit HTTP": {
+      "main": [
+        [
+          {
+            "node": "Format Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TrendHunter HTTP": {
+      "main": [
+        [
+          {
+            "node": "
